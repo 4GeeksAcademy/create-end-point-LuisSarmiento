@@ -15,5 +15,37 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "is_active": self.is_active,
+            # do not serialize the password, its a security breach
+        }
+
+
+class People(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+
+    # nave: Mapped[List["Nave"]] = relationship(back_populates="people")
+    # arma: Mapped[List["Arma"]] = relationship(back_populates="people")
+    # favorite_arma: Mapped[List["Favorite_arma"]] = relationship(back_populates="people")
+
+    # favorite_nave: Mapped[List["Favorite_nave"]] = relationship(back_populates="people")
+    
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            # do not serialize the password, its a security breach
+        }
+    
+class Location(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    planet: Mapped[str] = mapped_column(nullable=False)
+    
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "planet": self.planet,
             # do not serialize the password, its a security breach
         }
