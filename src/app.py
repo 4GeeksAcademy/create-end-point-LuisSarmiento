@@ -49,6 +49,7 @@ def get_users():
 
     return jsonify(response_body), 200
 
+
 @app.route('/person', methods=['GET'])
 def get_people():
     all_people = People.query.all()
@@ -58,6 +59,12 @@ def get_people():
 
     return jsonify(personas), 200
 
+@app.route('/person/<int:people_id>', methods=['GET'])
+def get_person(people_id):
+    person = db.session.get(People, people_id)
+
+    return jsonify(person.serialize()), 200
+
 @app.route('/planets', methods=['GET'])
 def get_planets():
     all_planets = Location.query.all()
@@ -66,6 +73,12 @@ def get_planets():
     response_body = planets
 
     return jsonify(planets), 200
+
+@app.route('/planets/<int:planet_id>', methods=['GET'])
+def get_planet(planet_id):
+    planet = db.session.get(Location, planet_id)
+    
+    return jsonify(planet.serialize()), 200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
